@@ -22,5 +22,6 @@ class Auth extends Controller
     	}
     	// print_r($query[0]->id);
  	  	// return $req->input();
+        
     }
 }
