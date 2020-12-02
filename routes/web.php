@@ -15,7 +15,23 @@ use App\Http\Controllers\Auth;
 */
 
 Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/calendar', function () {
+    return view('calendar');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/login', function () {
     return view('login');
+});
+
+Route::get('/forum', function () {
+    return view('forum');
 });
 
 Route::get('/laravel', function () {
