@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
-
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ForumController;
+use App\Http\Controllers\ThreadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,9 +32,12 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/forum', function () {
-    return view('forum');
-});
+// routa /forum till CategoryController klassen, funktionen index
+Route::get('/forum', [CategoryController::class, 'show']);
+Route::get('/forum/{forumID}', [ForumController::class, 'show']);
+Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
+
+
 
 Route::get('/laravel', function () {
     return view('welcome');
