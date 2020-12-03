@@ -25,9 +25,10 @@ Route::get('/calendar', function () {
     return view('calendar');
 });
 
-Route::get('/about', function () {
-    return view('about');
+Route::get('/create_thread', function () {
+    return view('create_thread');
 });
+
 
 Route::get('/login', function () {
     return view('login');
@@ -37,6 +38,8 @@ Route::get('/login', function () {
 Route::get('/forum', [CategoryController::class, 'show']);
 Route::get('/forum/{forumID}', [ForumController::class, 'show']);
 Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
+
+Route::post('/create_thread', [ThreadController::class, 'create']);
 
 Route::get('calendar', [FullCalendarController::class, 'index']);
 Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);

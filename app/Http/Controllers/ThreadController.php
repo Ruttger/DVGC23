@@ -24,9 +24,17 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $thread = new Thread;
+        $thread -> id = 
+        $thread -> title = $request -> title;
+        $thread -> body = $request -> body;
+        $thread -> latest_reply = $request -> latest_reply;
+        $thread -> forum_id = $request -> forum_id;
+        $thread -> user_id = $request -> user_id;
+        $thread ->save();
     }
 
     /**
@@ -38,6 +46,7 @@ class ThreadController extends Controller
     public function store(Request $request)
     {
         //
+        
     }
 
     /**
