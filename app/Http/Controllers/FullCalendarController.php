@@ -12,7 +12,6 @@ class FullCalendarController extends Controller
     {
         if(request()->ajax())
         {
-
             $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
             $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
 
@@ -22,22 +21,22 @@ class FullCalendarController extends Controller
         return view('fullcalendar');
     }
 
-
     public function create(Request $request)
     {
-        $insertArr = [ 'title' => $request->title,
-            'start' => $request->start,
-            'end' => $request->end
-        ];
-        $event = Event::insert($insertArr);
-        return Response::json($event);
+        $event = new Event();
+        $event->title=$request->get('event_title');
+        $event->start=$request->get('start_time');
+        $event->end=$request->get('end_time');
+        $event->save();
+
+        return Redirect::to('/calendar');
     }
 
 
     public function update(Request $request)
     {
         $where = array('id' => $request->id);
-        $updateArr = ['title' => $request->title,'start' => $request->start, 'end' => $request->end];
+        $updateArr = ['start' => $request->start_time, 'end' => $request->end_time];
         $event  = Event::where($where)->update($updateArr);
 
         return Response::json($event);

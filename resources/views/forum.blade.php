@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 
 @section('marker')
@@ -7,13 +5,13 @@
         <a href="/">Home</a>
         <a class="active" href="/forum">Forum</a>
         <a href="/calendar">Calendar</a>
-		<a href="/login">Login</a>       
+		<a href="/login">Login</a>
 	</div>
-@endsection  
+@endsection
 
 @section('headline')
 	<h1> Forum </h1>
-@endsection  
+@endsection
 
 </style>
 @section('content')
@@ -39,13 +37,13 @@
 							@if($forum->category_id == $category->id)
 								<tr>
 									<td>
-										<h3> <a href="/forum/{{$forum->id}}"> 
-											{{ $forum->title }} 
+										<h3> <a href="/forum/{{$forum->id}}">
+											{{ $forum->title }}
 										</a> </h3>
 										<br>
 										<h5> {{ $forum->subtitle }} </h5>
 									</td>
-											
+
 									<td>0</td>
 									<td>0</td>
 									<td>0</td>
@@ -79,25 +77,25 @@
 						@if($thread->forum_id == $forum->id)
 							<tr>
 								<td>
-									<h3> <a href="/forum/{{$forum->id}}/thread/{{$thread->id}}"> 
-										{{ $thread->title }} 
+									<h3> <a href="/forum/{{$forum->id}}/thread/{{$thread->id}}">
+										{{ $thread->title }}
 									</a> </h3>
 									<br>
 									{{-- SKAPA NY RELATION MELLAN THREAD OCH USER FÖR ATT HÄMTA USER ???
-										@if(thread->user_id == user->id) 
+										@if(thread->user_id == user->id)
 											or smt
 									<h5> skapad av {{ $user->name }} </h5>
 
 									 --}}
 								</td>
-											
+
 								<td>0</td>
 								<td>0</td>
 								<td>0</td>
 							</tr>
 						@endif
 					@endforeach
-					<tr> 
+					<tr>
 						<td colspan="4">
 							<form action="/forum/{{$forum->id}}/create" method="POST">
 								@csrf
@@ -119,22 +117,22 @@
 				<tbody>
 					<tr>
 						<td>
-							<h3> {{ $thread->title }} </h3>	
+							<h3> {{ $thread->title }} </h3>
 							{{-- av {{ $user->name}} {{thread->created_at}} --}}
 							{{-- <br> --}}
-							{{ $thread->body }} 
+							{{ $thread->body }}
 
 						</td>
 						<td>
-							{{-- {{ $user->avatar }} kommer troligtvis inte användas --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->name }} --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->role }} --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->posts }} --}} 
-							{{-- <br> --}} 
-							{{-- Medlem sen: {{ $user->created_at }} --}} 
+							{{-- {{ $user->avatar }} kommer troligtvis inte användas --}}
+							{{-- <br> --}}
+							{{-- {{ $user->name }} --}}
+							{{-- <br> --}}
+							{{-- {{ $user->role }} --}}
+							{{-- <br> --}}
+							{{-- {{ $user->posts }} --}}
+							{{-- <br> --}}
+							{{-- Medlem sen: {{ $user->created_at }} --}}
 
 							test
 							<br>
@@ -142,30 +140,30 @@
 							<br>
 							Inlägg: 2
 							<br>
-							Medlem sedan: Mon Nov 20 2020 
+							Medlem sedan: Mon Nov 20 2020
 						</td>
 
 					</tr>
-					
+
 					@foreach($replies as $reply)
 						<tr>
 							<td>
-								<h3> {{ $thread->title }} </h3>	
+								<h3> {{ $thread->title }} </h3>
 								{{-- av {{ $user->name}} {{thread->created_at}} --}}
 								{{-- <br> --}}
-								{{ $reply->body }} 
+								{{ $reply->body }}
 
 							</td>
 							<td>
-								{{-- {{ $user->avatar }} kommer troligtvis inte användas --}} 
-								{{-- <br> --}} 
-								{{-- {{ $user->name }} --}} 
-								{{-- <br> --}} 
-								{{-- {{ $user->role }} --}} 
-								{{-- <br> --}} 
-								{{-- {{ $user->posts }} --}} 
-								{{-- <br> --}} 
-								{{-- Medlem sen: {{ $user->created_at }} --}} 
+								{{-- {{ $user->avatar }} kommer troligtvis inte användas --}}
+								{{-- <br> --}}
+								{{-- {{ $user->name }} --}}
+								{{-- <br> --}}
+								{{-- {{ $user->role }} --}}
+								{{-- <br> --}}
+								{{-- {{ $user->posts }} --}}
+								{{-- <br> --}}
+								{{-- Medlem sen: {{ $user->created_at }} --}}
 
 								test
 								<br>
@@ -173,16 +171,16 @@
 								<br>
 								Inlägg: 2
 								<br>
-								Medlem sedan: Mon Nov 20 2020 
+								Medlem sedan: Mon Nov 20 2020
 							</td>
 						</tr>
 					@endforeach
 				</tbody>
 			</table>
-			
+
 
 		@endif
 
-	
-@endsection  
+
+@endsection
 

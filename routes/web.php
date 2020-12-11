@@ -35,6 +35,7 @@ Route::get('/login', function () {
 });
 
 // routa /forum till CategoryController klassen, funktionen index
+
 Route::get('/forum', [CategoryController::class, 'show']);
 Route::get('/forum/{forumID}', [ForumController::class, 'show']);
 Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
@@ -49,7 +50,6 @@ Route::get('calendar', [FullCalendarController::class, 'index']);
 Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);
 Route::post('fullcalendar/update', [FullCalendarController::class, 'update']);
 Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
-
 
 
 Route::get('/laravel', function () {

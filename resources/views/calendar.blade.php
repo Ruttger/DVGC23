@@ -5,15 +5,15 @@
 		<a href="/">Home</a>
 		<a href="/forum">Forum</a>
 		<a class="active" href="/calendar">Calendar</a>
-		<a href="/login">Login</a>  
+		<a href="/login">Login</a>
 	</div>
-@endsection  
- 
+@endsection
+
 @section('headline')
 	<h1> Calendar </h1>
-@endsection  
+@endsection
 
 @section('content')
 	<p> This is something in calendar </p>
-@endsection  
+@endsection
 
