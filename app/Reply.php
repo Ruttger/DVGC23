@@ -11,6 +11,8 @@ class Reply extends Model
 {
     // use HasFactory;
 
+    protected $fillable = ['body', 'thread_id', 'user_id'];
+
     // Borde vara hasOne - om man vill kunna gå från Reply till Thread
     // Måste lägga till forein key i thread isåfall    
     // public function getThread(){

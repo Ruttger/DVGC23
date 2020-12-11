@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Thread;
 use App\Reply;
 use App\User;
+use App\Forum;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -24,20 +25,41 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $forumID)
+    public function create(Request $request)
     {
-        //
-        $thread = new Thread;
-        $thread -> id;
-        $thread -> title = $request -> title;
-        $thread -> body = $request -> body;
-        $thread -> latest_reply = $request -> latest_reply;
-        $thread -> forum_id = $request -> forum_id;
-        //$thread -> user_id = Auth::id something
-        $thread ->save();
 
-        return view(forum)->with('thread', $thread)
-                        ->with('forumID', $forumID);
+        // Skapa ny tråd
+        $thread = new Thread;
+        $thread->title = $request->title;
+        $thread->body = $request->body;
+        $thread->forum_id = $request->forumID;
+        $thread->user_id = 4;       // SKA komma från den inloggade användaren
+        $thread->save();
+
+        // Hämta användaren (för att öka antalet posts)
+        // $user = User::where('id', 4); // Ska komma från inloggade användaren
+        // $user->posts = $user->posts +1; 
+
+        // Hämta forumet som tråden tillhör för att öka antalet posts 
+        $forum = Forum::find($request->forumID);
+        $forum->num_threads = $forum->num_threads + 1;
+        $forum->latest_thread = $thread->id;
+        $forum->save();
+
+        // Hämta senaste tråden i forumet man är i (den som precis skapades)
+        // Så att man kan returnera datan från den för att visa datan (har inte tillgång till id)
+        // annars
+        $thread = Thread::where('forum_id', $request->forumID)->latest()->first();
+
+        // dd($thread);
+        // Hämta replies
+        $replies = Reply::where('thread_id', $thread->id)->get();
+        $users = User::all(); // borde bara hämta vissa ??
+
+        return view('forum')->with('from', 'thread')
+                            ->with('thread', $thread)
+                            ->with('replies', $replies)
+                            ->with('users', $users);
     }
 
     /**
@@ -62,10 +84,12 @@ class ThreadController extends Controller
     {
         //
         $thread = Thread::find($threadID);
-        $replies = Reply::where('thread_id', $threadID)->get();
-        $users = User::all();
 
-        // dd($thread);
+
+
+        $replies = Reply::where('thread_id', $threadID)->get();
+        $users = User::all(); // borde bara hämta vissa ??
+
         return view('forum')->with('from', 'thread')
                             ->with('thread', $thread)
                             ->with('replies', $replies)

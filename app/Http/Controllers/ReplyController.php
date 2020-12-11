@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+use App\Thread;
+use App\User;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -22,9 +24,33 @@ class ReplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // Skapa ny tråd
+        $reply = new Reply;
+        $reply->body = $request->body;
+        $reply->thread_id = $request->threadID;
+        $reply->user_id = 6;
+        $reply->save();
+
+        // uppdatera updated_at
+        $thread = Thread::find($request->threadID);
+        $thread->touch();
+        $thread->save();
+
+        // Hämta användaren (för att öka antalet posts)
+        // $user = User::where('id', 4); // Ska komma från inloggade användaren
+        // $user->posts = $user->posts +1; 
+
+        //Hämta tråden man svarat på 
+        $thread = Thread::find($request->threadID);
+        $replies = Reply::where('thread_id', $request->threadID)->get();
+        $users = User::all(); // borde bara hämta vissa ??
+
+        return view('forum')->with('from', 'thread')
+                            ->with('thread', $thread)
+                            ->with('replies', $replies)
+                            ->with('users', $users);
     }
 
     /**

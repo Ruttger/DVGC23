@@ -85,10 +85,11 @@
             
                 /* fix overflow */
                 max-width: 100px;
+                vertical-align: top;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
-                vertical-align: top;
+                
             } 
       
             .category_forum tr {
@@ -107,6 +108,9 @@
             .category_forum h3, h5 {
                 padding: 0px;
                 margin: 0px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Forum;
 use App\Thread;
 use App\User;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -24,9 +25,19 @@ class ForumController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // Skapa nytt forum
+        $forum = new Forum;
+        $forum->title = $request->title;
+        $forum->subtitle = $request->subtitle;
+        $forum->category_id = $request->categoryID;
+        $forum->save();
+
+        // Hämta categories och forum
+        $categories = Category::all();
+        $forums = Forum::all();
+        return view('forum')->with('from', 'category')->with('categories', $categories)->with('forums', $forums);
     }
 
     /**
@@ -51,6 +62,10 @@ class ForumController extends Controller
         //
         
         $forum   = Forum::find($id);
+        // Uppdatera antal views
+        $forum->num_views = $forum->num_views + 1;
+        $forum->save();
+
         $threads = Thread::where('forum_id', $id)->get();
         $user = User::all(); 
         return view('forum')->with('from', 'forum')

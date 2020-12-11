@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('num_posts')->unsigned()->default(0);     // number of threads
             $table->rememberToken();
             $table->timestamps();
         });

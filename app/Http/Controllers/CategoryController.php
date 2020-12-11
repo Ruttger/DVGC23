@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Forum;
+use App\Thread;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -56,8 +57,12 @@ class CategoryController extends Controller
         // hämta alla kategorier och dess forums
         $categories = Category::all();
         $forums = Forum::all();
+        $threads = Thread::all();
         // dd($categories); // print och döda
-        return view('forum')->with('from', 'category')->with('categories', $categories)->with('forums', $forums);
+        return view('forum')->with('from', 'category')
+                            ->with('categories', $categories)
+                            ->with('forums', $forums)
+                            ->with('threads', $threads);
     }
 
     /**

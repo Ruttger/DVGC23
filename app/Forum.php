@@ -10,7 +10,7 @@ use App\Thread;
 class Forum extends Model
 {
     // use HasFactory;
-
+    protected $fillable = ['body', 'thread_id', 'user_id'];
     // Borde vara hasOne - om man vill kunna gå från forum till category
     // Måste lägga till forein key i category isåfall
     // public function getCategory(){

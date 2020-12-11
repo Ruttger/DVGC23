@@ -14,9 +14,9 @@
 @endsection  
 
 @section('content')
-	<h3> Skapa en ny tråd </h3>
+	<h3> Skapa nytt Forum </h3>
 
-	<form action="/forum/{forumID}/thread/create" method="post">
+	<form action="/forum/{categoryID}/forum/create" method="post">
 		@csrf
 		<table>	
 			
@@ -27,19 +27,18 @@
 			</tr>
 			<tr>
 				<td>
-					<textarea name="body" rows="10" cols="30">
-						Meddelande
-					</textarea>					
+					<input type="text" name="subtitle" placeholder="Beskrivning">				
 				</td>				
 			</tr>
 			<tr>
 				<td>
-					<input type="hidden" id="forumID" name="forumID" value="{{ $forumID }}">
+					<input type="hidden" id="categoryID" name="categoryID" value="{{ $categoryID }}">
 					<input type="submit" value="Skapa">
 				</td>				
 			</tr>
 	</table>
 	</form>
-	{{ $forumID }}
+	{{ $categoryID }}
+
 @endsection  
 

@@ -14,17 +14,11 @@
 @endsection  
 
 @section('content')
-	<h3> Skapa en ny tråd </h3>
+	<h3> Skriv ditt svar </h3>
 
-	<form action="/forum/{forumID}/thread/create" method="post">
+	<form action="/forum/{forumID}/thread/{threadID}/create" method="post">
 		@csrf
 		<table>	
-			
-			<tr>
-				<td>
-					<input type="text" name="title" placeholder="Title">
-				</td>				
-			</tr>
 			<tr>
 				<td>
 					<textarea name="body" rows="10" cols="30">
@@ -34,12 +28,13 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="hidden" id="forumID" name="forumID" value="{{ $forumID }}">
-					<input type="submit" value="Skapa">
+					<input type="hidden" id="threadID" name="threadID" value="{{ $threadID }}">
+					<input type="submit" value="Skicka svar">
 				</td>				
 			</tr>
 	</table>
 	</form>
-	{{ $forumID }}
+	Forum ID: {{ $forumID }} <br>
+	Thread ID: {{ $threadID }}
 @endsection  
 

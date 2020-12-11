@@ -11,6 +11,7 @@ use App\User;
 class Thread extends Model
 {
     // use HasFactory;
+    protected $fillable = ['title', 'body', 'forum_id', 'user_id'];
 
     // Borde vara hasOne - om man vill kunna gå från thread till forum
     // Måste lägga till forein key i forum isåfall
