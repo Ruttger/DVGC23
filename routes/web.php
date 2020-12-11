@@ -1,11 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ForumController;
-use App\Http\Controllers\ThreadController;
-use App\Http\Controllers\FullCalendarController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,40 +12,27 @@ use App\Http\Controllers\FullCalendarController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/calendar', function () {
-    return view('calendar');
-});
-
-Route::get('/create_thread', function () {
-    return view('create_thread');
-});
-
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-// routa /forum till CategoryController klassen, funktionen index
-Route::get('/forum', [CategoryController::class, 'show']);
-Route::get('/forum/{forumID}', [ForumController::class, 'show']);
-Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
-
-Route::post('/create_thread', [ThreadController::class, 'create']);
-
-Route::get('calendar', [FullCalendarController::class, 'index']);
-Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);
-Route::post('fullcalendar/update', [FullCalendarController::class, 'update']);
-Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
-
-
-
-Route::get('/laravel', function () {
     return view('welcome');
 });
+Route::get('/hello', function () {
+    return '<h1>Hello world</h1>';
+});
+Route::get('/about', function () {
+    return view('pages.about');
+});
+Route::get('/user/{id}', function ($id) {
+    return 'This is user '.$id;
+});
+*/
 
-Route::post("user", [Auth::class, 'Login']);
+Route::get('/', 'PagesController@index');
+Route::get('/about', 'PagesController@about');
+Route::get('/services', 'PagesController@services');
+
+Route::resource('posts', 'PostsController');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index');
