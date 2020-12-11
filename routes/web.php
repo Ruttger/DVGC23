@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ThreadController;
@@ -52,9 +52,6 @@ Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
 Route::get('/laravel', function () {
     return view('welcome');
 });
-
-Route::post("user", [Auth::class, 'Login']);
-
 
 
 

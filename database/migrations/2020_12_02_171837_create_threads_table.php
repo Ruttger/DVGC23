@@ -19,7 +19,7 @@ class CreateThreadsTable extends Migration
             $table->text('body');
             $table->integer('num_replies')->unsigned()->default(0);
             $table->integer('num_views')->unsigned()->default(0);
-            $table->integer('latest_reply')->unsigned();
+            $table->integer('latest_reply')->unsigned()->default(0);
             $table->integer('forum_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
