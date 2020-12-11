@@ -34,10 +34,26 @@ class ForumController extends Controller
         $forum->category_id = $request->categoryID;
         $forum->save();
 
+
         // Hämta categories och forum
         $categories = Category::all();
         $forums = Forum::all();
-        return view('forum')->with('from', 'category')->with('categories', $categories)->with('forums', $forums);
+        $threads = Thread::all();
+
+
+        // returnerar till (forum/tråd vy)
+        return redirect('/forum/'.$forum->id.'')
+            ->with('from', 'forum')
+            ->with('forum', $forum)
+            ->with('threads', $threads); 
+
+        // Om man istället vill redirecta till rooten av forumet (kategori/forum vy)  
+        // return redirect('/forum/')
+        //     ->with('from', 'category')
+        //     ->with('categories', $categories)
+        //     ->with('forums', $forums)
+        //     ->with('threads', $threads);
+
     }
 
     /**
@@ -70,7 +86,6 @@ class ForumController extends Controller
         $user = User::all(); 
         return view('forum')->with('from', 'forum')
                             ->with('forum', $forum)
-                            ->with('threads', $threads)
                             ->with('threads', $threads);
     }
 

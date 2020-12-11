@@ -56,10 +56,13 @@ class ThreadController extends Controller
         $replies = Reply::where('thread_id', $thread->id)->get();
         $users = User::all(); // borde bara hämta vissa ??
 
-        return view('forum')->with('from', 'thread')
-                            ->with('thread', $thread)
-                            ->with('replies', $replies)
-                            ->with('users', $users);
+
+        // Använder return redirect istället för return view för att 
+        return redirect('/forum/'.$thread->forum_id.'/thread/'.$thread->id.'')
+            ->with('from', 'thread')
+            ->with('thread', $thread)
+            ->with('replies', $replies)
+            ->with('users', $users);                          
     }
 
     /**
@@ -84,6 +87,8 @@ class ThreadController extends Controller
     {
         //
         $thread = Thread::find($threadID);
+        $thread->num_views = $thread->num_views + 1;
+        $thread->save();
 
 
 

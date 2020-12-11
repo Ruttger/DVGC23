@@ -35,6 +35,7 @@ class ReplyController extends Controller
 
         // uppdatera updated_at
         $thread = Thread::find($request->threadID);
+        $thread->num_replies = $thread->num_replies + 1;
         $thread->touch();
         $thread->save();
 
@@ -47,10 +48,15 @@ class ReplyController extends Controller
         $replies = Reply::where('thread_id', $request->threadID)->get();
         $users = User::all(); // borde bara hämta vissa ??
 
-        return view('forum')->with('from', 'thread')
-                            ->with('thread', $thread)
-                            ->with('replies', $replies)
-                            ->with('users', $users);
+
+        // Använder return redirect istället för return view för att  
+        return redirect('/forum/'.$thread->forum_id.'/thread/'.$thread->id.'')
+            ->with('from',$thread)
+            ->with('thread', $thread)
+            ->with('replies', $replies)
+            ->with('users', $users);
+
+                
     }
 
     /**

@@ -16,7 +16,7 @@
 @section('content')
 	<h3> Skriv ditt svar </h3>
 
-	<form action="/forum/{forumID}/thread/{threadID}/create" method="post">
+	<form action="/forum/{forumID}/thread/{threadID}/create" method="get">
 		@csrf
 		<table>	
 			<tr>

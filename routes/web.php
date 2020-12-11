@@ -74,11 +74,11 @@ Route::post('/forum/{forumID}/create_thread', function ($forumID) {
 Route::post('/forum/{forumID}/thread/create', [ThreadController::class, 'create']);
 
 /* Routes - Create Reply */
-Route::post('/forum/{forumID}/thread/{threadID}/create_reply', function ($forumID, $threadID) {
+Route::get('/forum/{forumID}/thread/{threadID}/create_reply', function ($forumID, $threadID) {
 	return view('create_reply')->with('forumID', $forumID)
 								->with('threadID', $threadID);
 });
-Route::post('/forum/{forumID}/thread/{threadID}/create', [ReplyController::class, 'create']);
+Route::get('/forum/{forumID}/thread/{threadID}/create', [ReplyController::class, 'create']);
 
 
 

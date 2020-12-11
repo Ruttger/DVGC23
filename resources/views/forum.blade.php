@@ -115,17 +115,19 @@
 										{{ $thread->title }} 
 									</a> </h3>
 									<br>
-									{{-- SKAPA NY RELATION MELLAN THREAD OCH USER FÖR ATT HÄMTA USER ???
+
+								</td>
+											
+								<td><h3> {{ $thread->num_replies }} </h3></td>
+								<td><h3> {{ $thread->num_views }} </h3></td>
+								<td>
+									{{-- 
 										@if(thread->user_id == user->id) 
 											or smt
 									<h5> skapad av {{ $user->name }} </h5>
 
-									 --}}
+									 --}}									
 								</td>
-											
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
 							</tr>
 						@endif
 					@endforeach
@@ -230,7 +232,7 @@
 				<!-- Om inloggad och INTE bannad -->
 					<tr> 
 						<td colspan="4">
-							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/create_reply" method="post">
+							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/create_reply" method="get">
 								@csrf
 								<input type="submit" value="Svara">
 							</form>

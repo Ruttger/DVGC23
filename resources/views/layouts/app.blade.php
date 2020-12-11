@@ -50,15 +50,15 @@
             }
             .category_forum td:nth-child(2){
                 width: 7%;
-                text-align: left;
+                text-align: center;
             }
             .category_forum td:nth-child(3){
                 width: 7%;
-                text-align: left;
+                text-align: center;
             } 
             .category_forum td:nth-child(4), th:nth-child(4){
                 width: 15%;
-                text-align: left;
+                text-align: center;
             }
 
             .category_forum a {
