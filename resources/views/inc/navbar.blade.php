@@ -21,7 +21,7 @@
                     <a class="nav-link" href="/posts">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Chat</a>
+                    <a class="nav-link" href="/chatify">Chat</a>
                 </li>
             </ul>
             <!-- Right Side Of Navbar -->
