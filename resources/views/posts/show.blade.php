@@ -6,7 +6,7 @@
         {{$post->title}}
         @if(!Auth::guest())
             @if(Auth::user()->id == $post->user_id)
-                <a href="/website/public/posts/{{ $post->id }}/edit" class="btn btn-link">Edit</a>
+                <a href="/posts/{{ $post->id }}/edit" class="btn btn-link">Edit</a>
             @endif
         @endif
     </h1>

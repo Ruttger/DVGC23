@@ -6,7 +6,7 @@
         @foreach($posts as $post)
             <div class="well">
                 <h3>
-                    <a href="/website/public/posts/{{$post->id}}">
+                    <a href="/posts/{{$post->id}}">
                         {{$post->title}}
                     </a>
                 </h3>
@@ -18,5 +18,5 @@
         <p>No posts found.</p>
     @endif
     <br>
-    <a href="/website/public/posts/create" class="btn btn-primary">Create Post</a>
+    <a href="/posts/create" class="btn btn-primary">Create Post</a>
 @endsection

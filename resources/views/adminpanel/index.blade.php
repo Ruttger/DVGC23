@@ -86,7 +86,7 @@
                                         <td>{{$user->role}}</td>
                                         <td>{{$user->created_at}}</td>
                                         @if(Auth::user()->role == 'admin')
-                                            <td><a href="/website/public/adminpanel/{{$user->id}}/update" class="btn btn-link">Make agent</a></td>
+                                            <td><a href="/adminpanel/{{$user->id}}/update" class="btn btn-link">Make agent</a></td>
                                             <td>
                                                 {!! Form::open(['action' => ['AdminpanelController@destroy', $user->id], 'method' => 'POST']) !!}
                                                 {{Form::hidden('_method', 'DELETE')}}
