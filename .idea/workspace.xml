@@ -9,7 +9,17 @@
     </expand>
     <select />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="afe559a5-6617-49cd-9db3-d94aed38dcf6" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
@@ -198,6 +208,10 @@
       <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+=======
+    <list default="true" id="afe559a5-6617-49cd-9db3-d94aed38dcf6" name="Default Changelist" comment="User admin working.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,6 +223,14 @@
     <execution />
   </component>
   <component name="Git.Settings">
+<<<<<<< Updated upstream
+=======
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="UserAdmin" />
+      </map>
+    </option>
+>>>>>>> Stashed changes
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -303,7 +325,11 @@
       <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
     </include_path>
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectId" id="1lSzTYU899ekPPPM6qmqBJIgvt1" />
+=======
+  <component name="ProjectId" id="1lgoxGhyEzfRg7YP1rpZZAEEkvD" />
+>>>>>>> Stashed changes
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -356,7 +382,18 @@
       <workItem from="1607791167184" duration="10619000" />
       <workItem from="1608121424123" duration="653000" />
       <workItem from="1608122623763" duration="37000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1608122686000" duration="678000" />
+>>>>>>> Stashed changes
     </task>
+    <task id="LOCAL−00001" summary="User admin working.">
+      <created>1608122874071</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1608122874071</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,6 +413,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+<<<<<<< Updated upstream
     <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="WindowStateProjectService">
@@ -403,5 +441,9 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/-1920.347.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1607791645984" />
+=======
+    <MESSAGE value="User admin working." />
+    <option name="LAST_COMMIT_MESSAGE" value="User admin working." />
+>>>>>>> Stashed changes
   </component>
 </project>
