@@ -2,6 +2,7 @@
 
 @section('content')
     <h1>
+        <hr>
         {{$post->title}}
         @if(!Auth::guest())
             @if(Auth::user()->id == $post->user_id)
@@ -17,7 +18,7 @@
     <small>Written on {{ $post->created_at }} by {{$post->user->name}}</small>
     <hr>
     @if(!Auth::guest())
-        @if(Auth::user()->id == $post->user_id)
+        @if(Auth::user()->id == $post->user_id || Auth::user()->role == 'admin')
         <h2>
             {!! Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST']) !!}
             {{Form::hidden('_method', 'DELETE')}}

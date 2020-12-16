@@ -19,9 +19,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/website/public/posts">Posts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/" tabindex="-1" aria-disabled="true">Admin</a>
-                </li>
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -42,6 +39,10 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(Auth::user()->role <= 'agent')
+                                <a class="dropdown-item" href="/website/public/adminpanel">Administration</a>
+                            @endif
+
                             <a class="dropdown-item" href="/website/public/dashboard">Dashboard</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}"

@@ -128,7 +128,12 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         if (auth()->user()->id !== $post->user_id){
-            return redirect('/posts')->with('error', 'Unauthorized Page');
+            if (auth()->user()->role == 'admin'){
+                $post->delete();
+                return redirect('/posts')->with('success', 'Admin command');
+            }else{
+                return redirect('/posts')->with('error', 'Unauthorized Page');
+            }
         }
 
         $post->delete();

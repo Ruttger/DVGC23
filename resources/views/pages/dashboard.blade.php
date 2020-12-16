@@ -12,7 +12,11 @@
                 </div>
             @endif
 
+
+
+
             <a href="/website/public/posts/create" class="btn btn-primary">Create Post</a>
+            <hr>
                 <h3>Your Posts:</h3>
                 @if(count($posts) > 0)
                     <table class="table table-striped">
