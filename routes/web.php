@@ -38,10 +38,13 @@ Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('posts', 'PostsController');
 
+Route::resource('/settings', 'SettingController');
+
 Auth::routes();
 
 Route::resource('/adminpanel/accounts', 'AccountsController');
 
 
+Auth::routes();
 
-
+Route::get('/home', 'HomeController@index')->name('home');
