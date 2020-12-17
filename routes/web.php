@@ -18,6 +18,7 @@ use App\Http\Controllers\ReplyController;
 |
 */
 
+// hmm borde vara post?!
 Route::get('/', function () {
     return view('home');
 });
@@ -40,7 +41,7 @@ Route::get('/forum', [CategoryController::class, 'show']);
 Route::get('/forum/{forumID}', [ForumController::class, 'show']);
 Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
 
-
+// Hmm borde vara post ???
 /* Calender routes */
 Route::get('calendar', [FullCalendarController::class, 'index']);
 Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);
@@ -48,34 +49,26 @@ Route::post('fullcalendar/update', [FullCalendarController::class, 'update']);
 Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
 
 
+/* Routes - Forum */
 
-Route::get('/laravel', function () {
-    return view('welcome');
-});
-
-
-
-
-/* Routes - Create Forum */
 Route::post('/forum/{categoryID}/create_forum', function ($categoryID) {
-	// dd($categoryID);
 	return view('create_forum')->with('categoryID', $categoryID);
 });
 Route::post('/forum/{categoryID}/forum/create', [ForumController::class, 'create']);
+Route::post('/forum/{forumID}/delete', [ForumController::class, 'destroy']);
 
 
-/* Routes - Create Thread */
+/* Routes - Thread */
 Route::post('/forum/{forumID}/create_thread', function ($forumID) {
 	return view('create_thread')->with('forumID', $forumID);
 });
 Route::post('/forum/{forumID}/thread/create', [ThreadController::class, 'create']);
 
-/* Routes - Create Reply */
-Route::get('/forum/{forumID}/thread/{threadID}/create_reply', function ($forumID, $threadID) {
+/* Routes - CReply */
+Route::post('/forum/{forumID}/thread/{threadID}/create_reply', function ($forumID, $threadID) {
 	return view('create_reply')->with('forumID', $forumID)
 								->with('threadID', $threadID);
 });
-Route::get('/forum/{forumID}/thread/{threadID}/create', [ReplyController::class, 'create']);
-
-
+Route::post('/forum/{forumID}/thread/{threadID}/create', [ReplyController::class, 'create']);
+Route::post('/forum/{forumID}/thread/{threadID}/delete', [ThreadController::class, 'destroy']);
 

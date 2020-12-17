@@ -17,6 +17,8 @@ class CreateRepliesTable extends Migration
             $table->integer('id')->unsigned()->autoIncrement();
             $table->text('body');
             $table->integer('thread_id')->unsigned();
+            // om tråden som svarets FK pekar på tas bort, ta bort svaret
+            $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

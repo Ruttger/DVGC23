@@ -118,8 +118,8 @@ class ForumController extends Controller
      * @param  \App\Models\Forum  $forum
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Forum $forum)
+    public function destroy(Forum $forum, $forumID)
     {
-        //
+        $forum->destroy($forumID);
     }
 }

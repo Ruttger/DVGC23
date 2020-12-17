@@ -23,4 +23,5 @@ class Forum extends Model
 
     // hasOne relation till thread för senaste svaret
     // kan använda threads och sortera på tid och sen ta första?
+
 }

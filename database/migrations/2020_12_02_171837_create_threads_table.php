@@ -21,6 +21,8 @@ class CreateThreadsTable extends Migration
             $table->integer('num_views')->unsigned()->default(0);
             $table->integer('latest_reply')->unsigned()->default(0);
             $table->integer('forum_id')->unsigned();
+            // om forumet som trådens FK pekar på tas bort, ta bort tråden
+            $table->foreign('forum_id')->references('id')->on('forums')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

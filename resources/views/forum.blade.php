@@ -80,6 +80,7 @@
 										@csrf
 										<input type="submit" value="Nytt Forum">
 									</form>
+
 								</td>
 							</tr>
 						<!-- Slut Om Admin -->
@@ -134,9 +135,17 @@
 					<!-- Om inloggad och INTE bannad -->
 						<tr> 
 							<td colspan="4">
+								<!-- Skapa ny tråd -->
 								<form action="/forum/{{ $forum->id }}/create_thread" method="post">
 									@csrf
 									<input type="submit" value="Ny tråd">
+								</form>
+
+								<!-- Ta bort forum OM ADMIN -->
+								<form action="/forum/{{ $forum->id }}/delete" method="post">
+									@csrf
+									<input type="hidden" id="forumID" name="forumID" value="{{ $forum->id }}">									
+									<input type="submit" value="ta bort forum">
 								</form>
 							</td>
 						</tr>
@@ -232,9 +241,15 @@
 				<!-- Om inloggad och INTE bannad -->
 					<tr> 
 						<td colspan="4">
-							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/create_reply" method="get">
+							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/create_reply" method="post">
 								@csrf
 								<input type="submit" value="Svara">
+							</form>
+							<!-- Om admin eller (?) om du skapat tråden -->
+							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/delete" method="post">
+								@csrf
+								<input type="hidden" id="threadID" name="threadID" value="{{ $thread->id }}">	
+								<input type="submit" value="Ta bort tråd">
 							</form>
 						</td>
 					</tr>
