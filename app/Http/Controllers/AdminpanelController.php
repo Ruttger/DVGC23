@@ -23,30 +23,11 @@ class AdminpanelController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $users = user::all();
-        return view('adminpanel.index')->with('users', $users);
 
-    }
-
-    public function update($id){
-        $user = User::find($id);
-
-        $user->role == 'agent';
-        $user->save();
-
-        return redirect('/adminpanel')->with('success', 'User role updated');
-    }
-
-    public function destroy($id){
-        $user = User::find($id);
-
-        if (auth()->user()->role == 'admin'){
-            $user->delete();
-            return redirect('/adminpanel')->with('success', 'Admin command');
-
-        }else{
-            return redirect('/adminpanel')->with('error', 'Unauthorized Page');
-
+        if (auth()->user()->role > 'agent') {
+            return redirect('/home')->with('error', 'Unauthorized Page');
         }
+        return view('adminpanel.index');
     }
+
 }

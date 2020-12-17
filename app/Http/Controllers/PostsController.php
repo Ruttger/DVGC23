@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+
 class PostsController extends Controller
 {
     /**
@@ -88,7 +89,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         if (auth()->user()->id !== $post->user_id){
-            return redirect('/posts')->with('error', 'Unauthorized Page');
+            return redirect('/home')->with('error', 'Unauthorized Page');
         }
 
         return view('posts.edit')->with('post', $post);
@@ -132,11 +133,13 @@ class PostsController extends Controller
                 $post->delete();
                 return redirect('/posts')->with('success', 'Admin command');
             }else{
-                return redirect('/posts')->with('error', 'Unauthorized Page');
+                return redirect('/home')->with('error', 'Unauthorized Page');
             }
+        }else{
+            $post->delete();
+            return redirect('/posts')->with('success', 'Post removed');
         }
 
-        $post->delete();
-        return redirect('/posts')->with('success', 'Post removed');
+
     }
 }

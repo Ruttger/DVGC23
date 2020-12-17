@@ -31,13 +31,17 @@ Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
+Route::get('/home', 'PagesController@index')->name('home');
+Route::get('/adminpanel', 'AdminPanelController@index');
+
+Route::get('/dashboard', 'DashboardController@index');
+
 Route::resource('posts', 'PostsController');
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index');
-Route::resource('/adminpanel', 'AdminpanelController');
+Route::resource('/adminpanel/accounts', 'AccountsController');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
