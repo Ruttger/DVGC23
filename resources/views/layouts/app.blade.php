@@ -190,13 +190,20 @@
           margin: 15% auto; /* 15% from the top and centered */
           padding: 20px;
           border: 1px solid #888;
-          width: 80%; /* Could be more or less, depending on screen size */
+          max-width: 30%;
+          width: 30%; /* Could be more or less, depending on screen size */
+          word-wrap: break-word;
+          overflow: auto;
+        }
+
+        .modal-body {
+          align-self: center;
         }
 
         /* The Close Button */
         .close {
           color: #aaa;
-          float: right;
+          text-align: right;
           font-size: 28px;
           font-weight: bold;
         }

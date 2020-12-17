@@ -59,10 +59,16 @@
             eventColor: '#fff6b0',
             eventTextColor: 'black',
             eventBorderColor: 'black',
-            displayEventTime: false,
+            displayEventTime: true,
             weekNumbers: true,
             editable: true,
-            
+            allDay: false,
+            allDayDefault: false,
+            defaultAllDayEventDuration: 0,
+            forceEventDuration: true,
+            defaultTimedEventDuration: '01:00',
+            nextDayThreshold: '00:00:10',
+            timeFormat: 'H(:mm)',
             eventRender: function (event, element, view) {
                 if (event.allDay === 'true') {
                     event.allDay = true;
@@ -76,10 +82,10 @@
             
             select: function (start, end, allDay) {
                 <!-- Om inloggad och Admin -->
-                if(true){
 
-                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                if(true){
+                    var startDate = $.fullCalendar.formatDate(start, "Y-MM-DD");
+                    var endDate = $.fullCalendar.formatDate(end, "Y-MM-DD");
                     var modal = displayModal();
 
                     $('#modal-body-id').html("<label for=\"titel\">For title: </label> <br>" + 
@@ -91,6 +97,12 @@
                                             "<label for=\"description\">For description: </label> <br>" + 
                                             "<textarea id=\"description\"> </textarea>  <br>" + 
 
+                                            "<label for=\"startTime\">Start time: </label> <br>" + 
+                                            "<input type=\"time\" id=\"startTime\" min=\"14:00\" max=\"15:59\"> <br>" +
+
+                                            "<label for=\"endTime\">End time: </label> <br>" + 
+                                            "<input type=\"time\" id=\"endTime\" min=\"14:00\" max=\"15:59\"> <br>" +
+
                                             "<button type=\"button\" id=\"create\">Create</button>");
 
 
@@ -101,33 +113,33 @@
                         var description = $("#description").val();
 
                         if (title) {
-                    
-                            jQuery.ajax({
-                                url: "{{URL::to('/fullcalendar/create')}}",
+                            var startTime = $("#startTime").val();
+                            var endTime = $("#endTime").val();
+                            
+                            var start = startDate + " " + startTime + ":00";
+                            var end = startDate + " " + endTime + ":00";
+                            if(Date.parse(end) > Date.parse(start)){            
+                                jQuery.ajax({
+                                    url: "{{URL::to('/fullcalendar/create')}}",
 
-                                type: "POST",
-                                data: {
-                                    event_title: title,
-                                    start_time: start,
-                                    end_time: end,
-                                    event_url: url,
-                                    description: description
-                                },
-                                success: function (data) {
-                                    displayMessage("Added Successfully");
-                                }
-                            });
-                            //calendar.fullCalendar( 'refetchEvents' );
-                            calendar.fullCalendar('renderEvent', {  title: title,
-                                                                    start: start,
-                                                                    end: end,
-                                                                    backgroundColor: '#e1ffd4',
-                                                                    allDay: allDay
-                                                                }, 
-                                                                true
-                            );
+                                    type: "POST",
+                                    data: {
+                                        event_title: title,
+                                        start_time: start,
+                                        end_time: end,
+                                        event_url: url,
+                                        description: description
+                                    },
+                                    success: function (data) {
+                                        displayMessage("Added Successfully");
+                                    }
+                                });
+                                calendar.fullCalendar( 'refetchEvents' );
+                                hideModal(modal);
+                            } else {
+                                alert('DUDE invail time');
+                            }
                         }
-                        hideModal(modal);
                     });  
                 }
                 <!-- Slut Om Admin -->
@@ -159,11 +171,12 @@
                 jsEvent.preventDefault();
                 var modal = displayModal();
 
-                $('#modal-body-id').html(event.title + 
+                $('#modal-body-id').html("<b>" + event.title + 
+                                        "</b><br>" + 
+                                        event.description +
+                                        "<br>Tid för event: <br><b>" + $.fullCalendar.formatDate(event.start, "HH:mm") + " - " + $.fullCalendar.formatDate(event.end, "HH:mm" + "</b>") +
                                         "<br>" + 
-                                        " <a href=\"" + event.url + "\">Länk till event</a>" + 
-                                        "<br>" + 
-                                        event.description);
+                                        " <a href=\"" + event.url + "\">Länk till event</a>");
                 
                 <!-- Om inloggad och Admin -->
                 if(true){
@@ -175,6 +188,11 @@
                         hideModal(modal);
                         displayModal();
 
+                        // hämta minuterna från tiden lagrad i databasen
+                        var startTime = event.start.toString().substring(16, 21);
+                        var endTime = event.end.toString().substring(16, 21);
+
+
                         $('#modal-body-id').html("<label for=\"titel\">For title: </label> <br>" + 
                                             "<input type=\"text\" id=\"titel\" value=" + event.title + ">  <br>" + 
 
@@ -183,6 +201,12 @@
 
                                             "<label for=\"description\">For description: </label> <br>" + 
                                             "<textarea id=\"description\" >" + event.description + "</textarea>  <br>" + 
+                                            
+                                            "<label for=\"startTime\">Start time: </label> <br>" + 
+                                            "<input type=\"time\" id=\"startTime\" value=" + startTime + "> <br>" +
+
+                                            "<label for=\"endTime\">End time: </label> <br>" + 
+                                            "<input type=\"time\" id=\"endTime\" value=" + endTime + "> <br>" +
 
                                             "<button type=\"button\" id=\"update\">Update</button>");
 
@@ -190,8 +214,17 @@
                             var title = $("#titel").val();
                             var url = $("#url").val();
                             var description = $("#description").val();
-                            var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-                            var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                            startTime = $("#startTime").val();
+                            endTime = $("#endTime").val();
+                            
+                            var startDate = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
+                            var endDate = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
+                            
+                            var start = startDate + " " + startTime + ":00";
+                            var end = endDate + " " + endTime + ":00";
+
+                            // var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD hh:mm:ss");
+                            // var end = $.fullCalendar.formatDate(event.start, "Y-MM-DD hh:mm:ss");
 
                             $.ajax({
                                 url: "{{URL::to('/fullcalendar/update')}}",
