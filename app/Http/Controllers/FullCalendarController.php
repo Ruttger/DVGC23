@@ -15,7 +15,15 @@ class FullCalendarController extends Controller
             $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
             $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
 
-            $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->get(['id','title','start', 'end']);
+            $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->get([
+                'id',
+                'title',
+                'start', 
+                'end', 
+                'url',
+                'description'
+                
+            ]);
             return Response::json($data);
         }
         return view('fullcalendar');
@@ -27,16 +35,32 @@ class FullCalendarController extends Controller
         $event->title=$request->get('event_title');
         $event->start=$request->get('start_time');
         $event->end=$request->get('end_time');
+        $event->url=$request->get('event_url');
+        $event->description=$request->get('description');
         $event->save();
 
         return Redirect::to('/calendar');
     }
 
 
-    public function update(Request $request)
+    public function updateDrop(Request $request)
     {
         $where = array('id' => $request->id);
         $updateArr = ['start' => $request->start_time, 'end' => $request->end_time];
+        $event  = Event::where($where)->update($updateArr);
+
+        return Response::json($event);
+    }
+
+
+    public function update(Request $request)
+    {
+        $where = array('id' => $request->id);
+        $updateArr = [  'title' => $request->event_title,
+                        'start' => $request->start_time, 
+                        'end'   => $request->end_time,
+                        'url'   => $request->event_url,
+                        'description' => $request->description];
         $event  = Event::where($where)->update($updateArr);
 
         return Response::json($event);
