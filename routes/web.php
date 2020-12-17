@@ -46,6 +46,7 @@ Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show
 Route::get('calendar', [FullCalendarController::class, 'index']);
 Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);
 Route::post('fullcalendar/update', [FullCalendarController::class, 'update']);
+Route::post('fullcalendar/updateDrop', [FullCalendarController::class, 'updateDrop']);
 Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
 
 
