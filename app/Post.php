@@ -11,10 +11,10 @@ class Post extends Model
     //Primary key
     public $primaryKey = 'id';
     //Timestamps
-    public $timestamps = true;
+    public $timestamps;
     public $Role = 100;
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('Appbu\User');
     }
 }
