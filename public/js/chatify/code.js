@@ -710,6 +710,7 @@ function star(user_id) {
  *-------------------------------------------------------------
  */
 function getFavoritesList() {
+
     $('.messenger-favorites').html(avatarLoading(4));
     $.ajax({
         url: url + '/favorites',
@@ -717,15 +718,15 @@ function getFavoritesList() {
         data: { '_token': access_token },
         dataType: 'JSON',
         success: (data) => {
-            $('.messenger-favorites').html('');
+            /*$('.messenger-favorites').html('');
             $('.messenger-favorites').html(data.favorites);
             // update data-action required with [responsive design]
-            cssMediaQueries();
+            cssMediaQueries();*/
         },
         error: () => {
             console.error('Server error, check your response');
         }
-    });
+    })
 }
 
 /**

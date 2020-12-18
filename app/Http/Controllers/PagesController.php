@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class PagesController extends Controller
 {
     public function index(){
@@ -17,7 +15,7 @@ class PagesController extends Controller
     }
 
     public function about(){
-        $title = "About";
+        $title = "About page!";
         return view('pages.about')->with('title', $title);
     }
 
