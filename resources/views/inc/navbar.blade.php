@@ -22,7 +22,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="alert('Genom att klicka här så godkänner du ....')" value="Click Me!" href="/chatify">Chat</a>
-
                 </li>
             </ul>
             <!-- Right Side Of Navbar -->
