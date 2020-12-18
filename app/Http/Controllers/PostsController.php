@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PostsController extends Controller
 {
@@ -14,13 +15,13 @@ class PostsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except'=> ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -36,7 +37,7 @@ class PostsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -46,8 +47,8 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -60,7 +61,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id= auth()->user()->id;
+        $post->user_id = auth()->user()->id;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post created');
@@ -69,8 +70,8 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -81,14 +82,14 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
         $post = Post::find($id);
 
-        if (auth()->user()->id !== $post->user_id){
+        if (auth()->user()->id !== $post->user_id) {
             return redirect('/home')->with('error', 'Unauthorized Page');
         }
 
@@ -98,9 +99,9 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -121,21 +122,21 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {
         $post = Post::find($id);
 
-        if (auth()->user()->id !== $post->user_id){
-            if (auth()->user()->role == 'admin'){
+        if (auth()->user()->id !== $post->user_id) {
+            if (auth()->user()->role == 'admin') {
                 $post->delete();
                 return redirect('/posts')->with('success', 'Admin command');
-            }else{
+            } else {
                 return redirect('/home')->with('error', 'Unauthorized Page');
             }
-        }else{
+        } else {
             $post->delete();
             return redirect('/posts')->with('success', 'Post removed');
         }

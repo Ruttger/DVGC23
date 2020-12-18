@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Renderable;
 
 class DashboardController extends Controller
 {
@@ -20,7 +20,7 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
@@ -28,7 +28,8 @@ class DashboardController extends Controller
         $user = User::find($user_id);
         return view('pages.dashboard')->with('posts', $user->posts);
     }
-    public function home(){
 
+    public function home()
+    {
     }
 }

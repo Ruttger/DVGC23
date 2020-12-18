@@ -21,7 +21,8 @@
                     <a class="nav-link" href="/posts">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/chatify">Chat</a>
+                    <a class="nav-link" onclick="alert('Genom att klicka här så godkänner du ....')" value="Click Me!" href="/chatify">Chat</a>
+
                 </li>
 
                 <li class="nav-item">

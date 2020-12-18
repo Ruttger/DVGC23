@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Renderable;
 
 class AdminpanelController extends Controller
 {
@@ -20,9 +19,10 @@ class AdminpanelController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index(){
+    public function index()
+    {
 
         if (auth()->user()->role > 'agent') {
             return redirect('/home')->with('error', 'Unauthorized Page');
