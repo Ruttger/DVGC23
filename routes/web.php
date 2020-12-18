@@ -13,38 +13,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/hello', function () {
-    return '<h1>Hello world</h1>';
-});
-Route::get('/about', function () {
-    return view('pages.about');
-});
-Route::get('/user/{id}', function ($id) {
-    return 'This is user '.$id;
-});
-*/
+
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
 Route::get('/home', 'PagesController@index')->name('home');
 Route::get('/adminpanel', 'AdminPanelController@index');
-
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('posts', 'PostsController');
-
-Route::resource('/settings', 'SettingController');
-
-Auth::routes();
-
 Route::resource('/adminpanel/accounts', 'AccountsController');
-
+Route::resource('/adminpanel/timeframes', 'TimeFramesController');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

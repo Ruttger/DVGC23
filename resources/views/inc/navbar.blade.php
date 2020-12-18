@@ -23,11 +23,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/chatify">Chat</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/settings">Ställ in tid för chat</a>
-                </li>
-
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">

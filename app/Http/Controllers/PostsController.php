@@ -30,7 +30,7 @@ class PostsController extends Controller
         //$posts = Post::orderBy('created_at', 'desc')->get();
 
         $posts = Post::orderBy('created_at', 'desc')->paginate(10);
-        return view('posts.index')->with('posts', $posts);
+        return view('posts.index')->with('posts', $posts)->with('title', 'Posts');
     }
 
     /**
@@ -40,6 +40,10 @@ class PostsController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->role > 'agent') {
+            return redirect('/home')->with('error', 'Unauthorized Page');
+        }
+
         return view('posts.create');
     }
 

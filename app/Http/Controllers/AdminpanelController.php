@@ -29,5 +29,4 @@ class AdminpanelController extends Controller
         }
         return view('adminpanel.index');
     }
-
 }

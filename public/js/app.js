@@ -15719,13 +15719,13 @@ jQuery.extend( {
 		}
 	},
 
-	// Creates a full fledged settings object into target
-	// with both ajaxSettings and settings fields.
+	// Creates a full fledged timeframes object into target
+	// with both ajaxSettings and timeframes fields.
 	// If target is omitted, writes into ajaxSettings.
 	ajaxSetup: function( target, settings ) {
 		return settings ?
 
-			// Building a settings object
+			// Building a timeframes object
 			ajaxExtend( ajaxExtend( target, jQuery.ajaxSettings ), settings ) :
 
 			// Extending ajaxSettings
@@ -15878,7 +15878,7 @@ jQuery.extend( {
 		deferred.promise( jqXHR );
 
 		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
+		// Handle falsy url in the timeframes object (#10093: consistency with old signature)
 		// We also use the url parameter if available
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
@@ -16558,7 +16558,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 var oldCallbacks = [],
 	rjsonp = /(=)\?(?=&|$)|\?\?/;
 
-// Default jsonp settings
+// Default jsonp timeframes
 jQuery.ajaxSetup( {
 	jsonp: "callback",
 	jsonpCallback: function() {
@@ -18961,7 +18961,7 @@ return jQuery;
     /**
      * By default, the template delimiters used by lodash are like those in
      * embedded Ruby (ERB) as well as ES2015 template strings. Change the
-     * following template settings to use alternative delimiters.
+     * following template timeframes to use alternative delimiters.
      *
      * @static
      * @memberOf _
@@ -27255,7 +27255,7 @@ return jQuery;
      * @returns {Function} Returns the new restricted function.
      * @example
      *
-     * var saves = ['profile', 'settings'];
+     * var saves = ['profile', 'timeframes'];
      *
      * var done = _.after(saves.length, function() {
      *   console.log('done saving!');
@@ -49826,7 +49826,7 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   null,
   null,
   null
-  
+
 )
 
 /* hot reload */
@@ -49846,7 +49846,7 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 

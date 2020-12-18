@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\TimeFrame;
 use Illuminate\Http\Request;
 
-class AccountsController extends Controller
+class TimeFramesController extends Controller
 {
     public function __construct()
     {
@@ -23,8 +23,8 @@ class AccountsController extends Controller
             return redirect('/home')->with('error', 'Unauthorized Page');
         }
 
-        $users = user::all();
-        return view('adminpanel.accounts.index')->with('users', $users);
+        $timeFrames = TimeFrame::all();
+        return view('adminpanel.timeframes.index')->with('timeFrames', $timeFrames);
     }
 
     /**
@@ -45,7 +45,25 @@ class AccountsController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect('/home')->with('error', 'Unauthorized Page');
+        if (auth()->user()->role > 'agent') {
+            return redirect('/home')->with('error', 'Unauthorized Page');
+        }
+
+        $this->validate($request, [
+            'starts_at_date' => 'required',
+            'starts_at_time' => 'required',
+            'expires_at_date' => 'required',
+            'expires_at_time' => 'required'
+
+        ]);
+
+        //Create Post
+        $timeFrame = new TimeFrame();
+        $timeFrame->starts_at = $request->input('starts_at_date') . ' ' . $request->input('starts_at_time');;
+        $timeFrame->expires_at = $request->input('expires_at_date') . ' ' . $request->input('expires_at_time');
+        $timeFrame->save();
+        return redirect('/adminpanel/timeframes');
+
     }
 
     /**
@@ -67,13 +85,7 @@ class AccountsController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-
-        if (auth()->user()->role !== 'admin'){
-            return redirect('/home')->with('error', 'Unauthorized Page');
-        }
-
-        return view('adminpanel.accounts.edit')->with('user', $user);
+        return redirect('/home')->with('error', 'Unauthorized Page');
     }
 
     /**
@@ -85,24 +97,7 @@ class AccountsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'role' => 'required'
-        ]);
-
-        if (auth()->user()->role !== 'admin') {
-            return redirect('/home')->with('error', 'Unauthorized Page');
-        }
-        //Create user and update the new values, then save to the DB.
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role = $request->input('role');
-        $user->save();
-
-        //redirect to accounts-management
-        return redirect('/adminpanel/accounts')->with('success', 'User edited');
+        return redirect('/home')->with('error', 'Unauthorized Page');
     }
 
     /**
@@ -113,14 +108,14 @@ class AccountsController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $timeFrame = TimeFrame::find($id);
 
-        if (auth()->user()->role != 'admin') {
+        if (auth()->user()->role > 'agent'){
             return redirect('/home')->with('error', 'Unauthorized Page');
         }
         else{
-            $user->delete();
-            return redirect('/adminpanel/accounts')->with('success', 'User deleted');
+            $timeFrame->delete();
+            return redirect('/adminpanel/timeframes')->with('success', 'TimeFrame removed');
         }
     }
 }

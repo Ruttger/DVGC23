@@ -449,7 +449,7 @@ function cancelAttachment() {
 
 /**
  *-------------------------------------------------------------
- * Cancel updating avatar in settings
+ * Cancel updating avatar in timeframes
  *-------------------------------------------------------------
  */
 function cancelUpdatingAvatar() {
@@ -840,7 +840,7 @@ function updateSettings() {
         processData: false,
         contentType: false,
         beforeSend: () => {
-            // close settings modal
+            // close timeframes modal
             app_modal({
                 show: false,
                 name: 'settings',
@@ -1116,20 +1116,20 @@ $(document).ready(function () {
         });
     });
 
-    // Settings button action to show settings modal
-    $('.settings-btn').on('click', function () {
+    // Window button action to show timeframes modal
+    $('.timeframes-btn').on('click', function () {
         app_modal({
             name: 'settings',
         });
     });
 
-    // on submit settings' form
+    // on submit timeframes' form
     $('#updateAvatar').on('submit', (e) => {
         e.preventDefault();
         updateSettings();
     });
-    // Settings modal [cancel button]
-    $('.app-modal[data-name=settings]').find('.app-modal-footer .cancel').on('click', function () {
+    // Window modal [cancel button]
+    $('.app-modal[data-name=timeframes]').find('.app-modal-footer .cancel').on('click', function () {
         app_modal({
             show: false,
             name: 'settings',
