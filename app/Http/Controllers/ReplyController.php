@@ -127,6 +127,8 @@ class ReplyController extends Controller
 
         $reply = Reply::find($replyID);
         $thread = Thread::find($reply->thread_id);
+        $thread->num_replies = $thread->num_replies - 1;
+        $thread->save();
 
         $reply->destroy($replyID);
 

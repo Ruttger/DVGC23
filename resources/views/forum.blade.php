@@ -149,7 +149,7 @@
 										<br>
 										
 										<!-- OM admin -->
-										@if(Auth::check() && Auth::user()->role == 1)
+										@if(Auth::check() && Auth::user()->role == "admin")
 											<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/delete" method="post">
 												@csrf
 												<input type="submit" value="Ta bort tråd">
