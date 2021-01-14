@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Category;
 use App\Forum;
 use App\Thread;
@@ -48,17 +49,16 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        // Hämta alla kategorier
-        // och för varje kategori hämta alla forum
-        // och för farje forum hämta alla trådar
-        // och för alla trådar hämta alla svar
-        // $categories = Category::with('getForums.getThreads.getReply')->get();
+        if(Auth::check()){
+            $categories = Category::all()->where('rights', '>=', Auth::user()->role);
+           
+        }else{
+            $categories = Category::all()->where('rights', 'user');              
+        }
 
-        // hämta alla kategorier och dess forums
-        $categories = Category::all();
         $forums = Forum::all();
-        $threads = Thread::all();
-        // dd($categories); // print och döda
+        $threads = Thread::all(); 
+
         return view('forum')->with('from', 'category')
                             ->with('categories', $categories)
                             ->with('forums', $forums)

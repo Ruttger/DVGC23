@@ -7,7 +7,21 @@
         <a href="/">Home</a>
         <a class="active" href="/forum">Forum</a>
         <a href="/calendar">Calendar</a>
-		<a href="/login">Login</a>       
+        @guest
+			<a href="{{ route('login') }}">{{ __('Login') }}</a> 
+		@endguest
+		@auth
+			<a href="{{ route('logout') }}"
+	            onclick="event.preventDefault();
+	            document.getElementById('logout-form').submit();">
+	            {{ Auth::user()->role }} {{ __('logout') }}
+	        </a>
+
+	        <!-- Anropas av när man trycker på logout, routen i Auth::route kräver post -->
+	        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+	        	@csrf
+	        </form>
+        @endauth       
 	</div>
 @endsection  
 
@@ -17,75 +31,89 @@
 
 </style>
 @section('content')
-	
-
+	<?php $user_role = 'admin'; ?>
 		<!-- Coming from Category -->
 	@if($from == 'category')
 		<p> Categories and subforums </p>
 		@if(count($categories) > 0)
 			@foreach($categories as $category)
-				<table class="category_forum" cellspacing="3">
-					<thead>
-						<tr>
-							<th>
-								<h3> {{ $category->title }} </h3>
-							</th>
-							<th>Antal Trådar</th>
-							<th>Antal Visningar</th>
-							<th>Senaste Tråden</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($forums as $forum)
-							@if($forum->category_id == $category->id)
-								<tr>
-									<td>
-										<h3> <a href="/forum/{{$forum->id}}"> 
-											{{ $forum->title }} 
-										</a> </h3>
-										<br>
-										<h5> {{ $forum->subtitle }} </h5>
-									</td>
-											
-									<td>
-										<h3> {{ $forum->num_threads }} </h3>
-									</td>
-									<td>
-										<h3> {{ $forum->num_views }} </h3>
-									</td>
-									<?php $latest = 0; ?>
-									@foreach($threads as $thread)
-										@if($forum->latest_thread == $thread->id)
-											<td class="category_forum">
-												<a href="/forum/{{$forum->id}}/thread/{{$thread->id}}">
-													<h3> {{ $thread->title }} </h3>
-												</a> <br>
-												<h3> {{ $thread->updated_at }} </h3>
-											</td>
-											<?php $latest = 1; ?>									
-										@endif
-									@endforeach
-									@if($latest == 0)
+				@if($user_role == 'user' AND $category->rights != 'user')
+					
+				@else 
+					<table class="category_forum" cellspacing="3">
+						<thead>
+							<tr>
+								<th>
+									<h3> {{ $category->title }} </h3>
+								</th>
+								<th>Antal Trådar</th>
+								<th>Antal Visningar</th>
+								<th>Senaste Tråden</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($forums as $forum)
+								@if($forum->category_id == $category->id)
+									<tr>
 										<td>
-											<h3> Ingen </h3>
+											<h3> <a href="/forum/{{$forum->id}}"> 
+												{{ $forum->title }} 
+											</a> </h3>
+											<br>
+											<h5> {{ $forum->subtitle }} </h5>
+
+											@if(Auth::check() && Auth::user()->role == 'admin')
+												<br>
+												<form action="/forum/{{ $forum->id }}/delete" method="post">
+													@csrf
+													<input type="submit" value="Ta bort forum">
+												</form>
+											@endif
+										<!-- slut OM admin -->
 										</td>
-									@endif	
+												
+										<td>
+											<h3> {{ $forum->num_threads }} </h3>
+										</td>
+										<td>
+											<h3> {{ $forum->num_views }} </h3>
+										</td>
+										<?php $latest = 0; ?>
+										@foreach($threads as $thread)
+											@if($forum->latest_thread == $thread->id)
+												<td class="category_forum">
+													<a href="/forum/{{$forum->id}}/thread/{{$thread->id}}">
+														<h3> {{ $thread->title }} </h3>
+													</a> <br>
+													<h3> {{ $thread->updated_at }} </h3>
+												</td>
+												<?php $latest = 1; ?>									
+											@endif
+										@endforeach
+										@if($latest == 0)
+											<td>
+												<h3> Ingen </h3>
+											</td>
+										@endif	
+									</tr>
+								@endif
+							@endforeach
+							<!-- Om inloggad och Admin -->
+							@if( Auth::check() && Auth::user()->role == "admin" ) 
+								<tr> 
+									<td colspan="4">
+										<form action="/forum/{{$category->id}}/create_forum" method="post">
+											@csrf
+											<input type="submit" value="Nytt Forum">
+										</form>
+
+									</td>
 								</tr>
 							@endif
-						@endforeach
-						<!-- Om inloggad och Admin -->
-							<tr> 
-								<td colspan="4">
-									<form action="/forum/{{$category->id}}/create_forum" method="post">
-										@csrf
-										<input type="submit" value="Nytt Forum">
-									</form>
-
-								</td>
-							</tr>
-						<!-- Slut Om Admin -->
-					</tbody>
-				</table>
+							<!-- Slut Om Admin -->
+						</tbody>
+					</table>
+				@endif
 			@endforeach
 		@else
 			<h3> No categories... </h3>
@@ -95,77 +123,88 @@
 		<!-- Coming from Forum -->
 	@if($from == 'forum')
 		<p> Specific Forum and Threads </p>
-		@if(count($threads) > 0)
-			<table class="category_forum" cellspacing="3">
-				<thead>
-					<tr>
-						<th>
-							<h3> {{ $forum->title }} </h3>
-						</th>
-						<th>Antal Svar</th>
-						<th>Antal Visningar</th>
-						<th>Senaste Svaret</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($threads as $thread)
-						@if($thread->forum_id == $forum->id)
-							<tr>
-								<td>
-									<h3> <a href="/forum/{{$forum->id}}/thread/{{$thread->id}}"> 
-										{{ $thread->title }} 
-									</a> </h3>
-									<br>
+		@if($user_role == 'user' AND $forum->rights != 'user')
+			
+		@else 
+			@if(count($threads) > 0)
+				<table class="category_forum" cellspacing="3">
+					<thead>
+						<tr>
+							<th>
+								<h3> {{ $forum->title }} </h3>
+							</th>
+							<th>Antal Svar</th>
+							<th>Antal Visningar</th>
+							<th>Senaste Svaret</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($threads as $thread)
+							@if($thread->forum_id == $forum->id)
+								<tr>
+									<td>
+										<h3> <a href="/forum/{{$forum->id}}/thread/{{$thread->id}}"> 
+											{{ $thread->title }} 
+										</a> </h3>
+										<br>
+										
+										<!-- OM admin -->
+										@if(Auth::check() && Auth::user()->role == 1)
+											<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/delete" method="post">
+												@csrf
+												<input type="submit" value="Ta bort tråd">
+											</form>
+										@endif
+										<!-- slut OM admin -->										
+									</td>
+												
+									<td><h3> {{ $thread->num_replies }} </h3></td>
+									<td><h3> {{ $thread->num_views }} </h3></td>
+									<td>
+										@foreach($latest_replies as $latest_reply)
 
-								</td>
-											
-								<td><h3> {{ $thread->num_replies }} </h3></td>
-								<td><h3> {{ $thread->num_views }} </h3></td>
-								<td>
-									{{-- 
-										@if(thread->user_id == user->id) 
-											or smt
-									<h5> skapad av {{ $user->name }} </h5>
+											@if ($latest_reply->thread_id == $thread->id)
+												<b> {{ $latest_reply->body }} </b>
+												<br>
+												<b> {{ $latest_reply->updated_at }} </b>
+											@endif
+										@endforeach
+									</td>
+								</tr>
+							@endif
+						@endforeach
+						<!-- Om inloggad och INTE bannad -->
+						@if(Auth::check() && Auth::user()->banned != 1)
+							<tr> 
+								<td colspan="4">
+									<!-- Skapa ny tråd -->
+									<form action="/forum/{{ $forum->id }}/create_thread" method="post">
+										@csrf
+										<input type="submit" value="Ny tråd">
+									</form>
 
-									 --}}									
 								</td>
 							</tr>
 						@endif
-					@endforeach
-					<!-- Om inloggad och INTE bannad -->
+					</tbody>
+				</table>
+			@else
+				<h3> No threads... </h3>
+				@if(Auth::check() && Auth::user()->banned != 1)
+				<!-- Om inloggad och INTE bannad -->
+					<table>
 						<tr> 
 							<td colspan="4">
-								<!-- Skapa ny tråd -->
 								<form action="/forum/{{ $forum->id }}/create_thread" method="post">
 									@csrf
 									<input type="submit" value="Ny tråd">
 								</form>
-
-								<!-- Ta bort forum OM ADMIN -->
-								<form action="/forum/{{ $forum->id }}/delete" method="post">
-									@csrf
-									<input type="hidden" id="forumID" name="forumID" value="{{ $forum->id }}">									
-									<input type="submit" value="ta bort forum">
-								</form>
 							</td>
 						</tr>
-					<!-- end If not banned -->
-				</tbody>
-			</table>
-		@else
-			<h3> No threads... </h3>
-			<!-- Om inloggad och INTE bannad -->
-				<table>
-					<tr> 
-						<td colspan="4">
-							<form action="/forum/{{ $forum->id }}/create_thread" method="post">
-								@csrf
-								<input type="submit" value="Ny tråd">
-							</form>
-						</td>
-					</tr>
-				</table>
-			<!-- end If not banned -->			
+					</table>
+				@endif
+				<!-- end If not banned -->			
+			@endif
 		@endif
 	@endif
 
@@ -174,85 +213,75 @@
 
 	<!-- Coming from Thread -->
 	@if($from == 'thread')
+
 		<p> Specific Post </p>
 		<table class="threads">
 			<thead></thead>
 			<tbody>
 				<tr>
+					<!-- Original Post -->
 					<td>
-						<h3> {{ $thread->title }} </h3>	
-						{{-- av {{ $user->name}} {{thread->created_at}} --}}
-						{{-- <br> --}}
-						{{ $thread->body }} 
 
+						<h3> {{ $thread->title }}  </h3>	
+						{{ $thread->body }}
+						<br> <br>
+						<i><small> {{ $thread->created_at }} </small></i> 
 					</td>
 					<td>
-						{{-- {{ $user->avatar }} kommer troligtvis inte användas --}} 
-						{{-- <br> --}} 
-						{{-- {{ $user->name }} --}} 
-						{{-- <br> --}} 
-						{{-- {{ $user->role }} --}} 
-						{{-- <br> --}} 
-						{{-- {{ $user->posts }} --}} 
-						{{-- <br> --}} 
-						{{-- Medlem sen: {{ $user->created_at }} --}} 
-
-						test
-						<br>
-						admin
-						<br>
-						Inlägg: 2
-						<br>
-						Medlem sedan: Mon Nov 20 2020 
+						<!-- användar info -->
+						<b>Användarnamn:</b> {{ $orignal_poster->name }} 
+						<br> 
+						<b>Kontotyp:</b> {{ $orignal_poster->role }} 
+						<br> 
+						<b>Inlägg:</b> {{ $orignal_poster->num_posts }} 
+						<br> 
+						<b>Medlem sendan:</b> {{ $orignal_poster->created_at }} 
 					</td>
 
 				</tr>
 					
 				@foreach($replies as $reply)
-					<tr>
-						<td>
-							<h3> {{ $thread->title }} </h3>	
-							{{-- av {{ $user->name}} {{thread->created_at}} --}}
-							{{-- <br> --}}
-							{{ $reply->body }} 
-
-						</td>
-						<td>
-							{{-- {{ $user->avatar }} kommer troligtvis inte användas --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->name }} --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->role }} --}} 
-							{{-- <br> --}} 
-							{{-- {{ $user->posts }} --}} 
-							{{-- <br> --}} 
-							{{-- Medlem sen: {{ $user->created_at }} --}} 
-
-							test
-							<br>
-							admin
-							<br>
-							Inlägg: 2
-							<br>
-							Medlem sedan: Mon Nov 20 2020 
-						</td>
-					</tr>
+					@foreach($repliers as $replier)
+						@if($replier->id == $reply->user_id)
+							<tr>
+								<!-- Svar -->
+								<td>
+									<h3> {{ $thread->title }} </h3>	
+									{{ $reply->body }}
+									<br> <br>
+									<i><small> {{ $reply->created_at }} </small></i> 
+									<!-- Om inloggad och admin -->
+									@if(Auth::check() && Auth::user()->role = 1)
+										<form action="/forum/reply/{{ $reply->id }}/delete" method="post">
+											@csrf
+											<input type="submit" value="Ta bort svar">
+										</form>
+									@endif
+								</td>
+								<td> 
+									<b>Användarnamn:</b> {{ $replier->name }} 
+									<br>
+									<b>Användartyp:</b> {{ $replier->role }} 
+									<br>
+									<b>Inlägg:</b> {{ $replier->num_posts }} 
+									<br>
+									<b>Medlem sen:</b> {{ $replier->created_at }}  
+								</td>
+							</tr>
+						@endif
+						@endforeach
 				@endforeach
 				<!-- Om inloggad och INTE bannad -->
+				@if(Auth::check() && Auth::user()->banned != 1)
 					<tr> 
 						<td colspan="4">
 							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/create_reply" method="post">
 								@csrf
 								<input type="submit" value="Svara">
 							</form>
-							<!-- Om admin eller (?) om du skapat tråden -->
-							<form action="/forum/{{ $thread->forum_id }}/thread/{{ $thread->id }}/delete" method="post">
-								@csrf
-								<input type="hidden" id="threadID" name="threadID" value="{{ $thread->id }}">	
-								<input type="submit" value="Ta bort tråd">
-							</form>
 						</td>
 					</tr>
+				@endif
 				<!-- End if -->
 			</tbody>
 		</table>

@@ -16,6 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->integer('id')->unsigned()->autoIncrement();
             $table->string('title');
+            $table->enum('rights', array('admin', 'agent', 'user'));
             $table->timestamps();
         });
     }

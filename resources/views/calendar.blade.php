@@ -5,7 +5,21 @@
 		<a href="/">Home</a>
 		<a href="/forum">Forum</a>
 		<a class="active" href="/calendar">Calendar</a>
-		<a href="/login">Login</a>
+        @guest
+			<a href="{{ route('login') }}">{{ __('Login') }}</a> 
+		@endguest
+		@auth
+			<a href="{{ route('logout') }}"
+	            onclick="event.preventDefault();
+	            document.getElementById('logout-form').submit();">
+	            {{ Auth::user()->role }} {{ __('logout') }}
+	        </a>
+
+	        <!-- Anropas av när man trycker på logout, routen i Auth::route kräver post -->
+	        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+	        	@csrf
+	        </form>
+        @endauth 
 	</div>
 @endsection
 

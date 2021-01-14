@@ -24,6 +24,7 @@ class CreateThreadsTable extends Migration
             // om forumet som trådens FK pekar på tas bort, ta bort tråden
             $table->foreign('forum_id')->references('id')->on('forums')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
+            $table->enum('rights', array('admin', 'agent', 'user'));
             $table->timestamps();
         });
     }
@@ -38,3 +39,6 @@ class CreateThreadsTable extends Migration
         Schema::dropIfExists('threads');
     }
 }
+
+
+rights (enum: admin, agent, user)

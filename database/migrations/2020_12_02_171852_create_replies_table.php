@@ -20,6 +20,7 @@ class CreateRepliesTable extends Migration
             // om tråden som svarets FK pekar på tas bort, ta bort svaret
             $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
+            $table->enum('rights', array('admin', 'agent', 'user'));
             $table->timestamps();
         });
     }

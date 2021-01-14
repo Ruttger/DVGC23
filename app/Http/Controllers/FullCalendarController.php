@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Event;
 use Illuminate\Http\Request;
 use Redirect,Response;
@@ -26,7 +27,13 @@ class FullCalendarController extends Controller
             ]);
             return Response::json($data);
         }
-        return view('fullcalendar');
+
+        if(Auth::check())
+            $role = Auth::user()->role;
+        else
+            $role = "none";
+
+        return view('fullcalendar')->with('role', $role);
     }
 
     public function create(Request $request)

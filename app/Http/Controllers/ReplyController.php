@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Reply;
 use App\Thread;
 use App\User;
@@ -26,22 +27,27 @@ class ReplyController extends Controller
      */
     public function create(Request $request)
     {
+
+        if(!Auth::check() || Auth::user()-> banned == 1)
+            return view('/forum');
+                    
         // Skapa ny tråd
         $reply = new Reply;
         $reply->body = $request->body;
         $reply->thread_id = $request->threadID;
-        $reply->user_id = 6;
-        $reply->save();
-
-        // uppdatera updated_at
+        $reply->user_id = Auth::user()->id;
+        
+        // tråden
         $thread = Thread::find($request->threadID);
         $thread->num_replies = $thread->num_replies + 1;
         $thread->touch();
         $thread->save();
+        $reply->rights = $thread->rights;
+        $reply->save();
 
-        // Hämta användaren (för att öka antalet posts)
-        // $user = User::where('id', 4); // Ska komma från inloggade användaren
-        // $user->posts = $user->posts +1; 
+        $user = Auth::user();
+        $user->num_posts = $user->num_posts + 1;
+        $user->save();  
 
         //Hämta tråden man svarat på 
         $thread = Thread::find($request->threadID);
@@ -110,8 +116,34 @@ class ReplyController extends Controller
      * @param  \App\Models\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reply $reply)
+    public function destroy(Reply $reply, $replyID)
     {
-        //
+
+        if(!Auth::check() || Auth::user()->role != "admin"){
+
+            dd(Auth::user()->role);
+            return redirect('/forum');
+        }
+
+        $reply = Reply::find($replyID);
+        $thread = Thread::find($reply->thread_id);
+
+        $reply->destroy($replyID);
+
+        $replies = Reply::where('thread_id', $reply->thread_id)->get();
+        $repliers_id = [];
+        foreach ($replies as $reply){
+            array_push($repliers_id, $reply->user_id);
+        }
+
+        // hämta användarna som har skrivit i tråden
+        $repliers = User::all()->intersect(User::whereIn('id', $repliers_id)->get());
+
+        return view('forum')->with('from', 'thread')
+                            ->with('thread', $thread)
+                            ->with('replies', $replies)
+                            ->with('repliers', $repliers)
+                            ->with('orignal_poster', User::find($thread->user_id));            
+     
     }
 }

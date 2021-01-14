@@ -36,12 +36,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
-// routa /forum till CategoryController klassen, funktionen index
 Route::get('/forum', [CategoryController::class, 'show']);
 Route::get('/forum/{forumID}', [ForumController::class, 'show']);
 Route::get('/forum/{forumID}/thread/{threadID}', [ThreadController::class, 'show']);
 
-// Hmm borde vara post ???
 /* Calender routes */
 Route::get('calendar', [FullCalendarController::class, 'index']);
 Route::post('fullcalendar/create', [FullCalendarController::class, 'create']);
@@ -55,21 +53,24 @@ Route::post('fullcalendar/delete', [FullCalendarController::class, 'destroy']);
 Route::post('/forum/{categoryID}/create_forum', function ($categoryID) {
 	return view('create_forum')->with('categoryID', $categoryID);
 });
-Route::post('/forum/{categoryID}/forum/create', [ForumController::class, 'create']);
-Route::post('/forum/{forumID}/delete', [ForumController::class, 'destroy']);
 
-
-/* Routes - Thread */
 Route::post('/forum/{forumID}/create_thread', function ($forumID) {
 	return view('create_thread')->with('forumID', $forumID);
 });
-Route::post('/forum/{forumID}/thread/create', [ThreadController::class, 'create']);
 
-/* Routes - CReply */
 Route::post('/forum/{forumID}/thread/{threadID}/create_reply', function ($forumID, $threadID) {
 	return view('create_reply')->with('forumID', $forumID)
 								->with('threadID', $threadID);
 });
+
+Route::post('/forum/{categoryID}/forum/create', [ForumController::class, 'create']);
+Route::post('/forum/{forumID}/thread/create', [ThreadController::class, 'create']);
 Route::post('/forum/{forumID}/thread/{threadID}/create', [ReplyController::class, 'create']);
+
+
 Route::post('/forum/{forumID}/thread/{threadID}/delete', [ThreadController::class, 'destroy']);
+Route::post('/forum/{forumID}/delete', [ForumController::class, 'destroy']);
+Route::post('/forum/reply/{replyID}/delete', [ReplyController::class, 'destroy']);
+
+Auth::routes();
 

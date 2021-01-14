@@ -9,19 +9,11 @@ use App\Thread;
 
 class Forum extends Model
 {
-    // use HasFactory;
-    protected $fillable = ['body', 'thread_id', 'user_id'];
-    // Borde vara hasOne - om man vill kunna gå från forum till category
-    // Måste lägga till forein key i category isåfall
-    // public function getCategory(){
-    // 	return $this->belongsTo(Category::class);
-    // }
+    protected $fillable = ['body'];
+    // protected $fillable = ['body', 'thread_id', 'user_id'];
 
     public function getThreads(){
     	return $this->hasMany(Thread::class, 'forum_id', 'id');
     }
-
-    // hasOne relation till thread för senaste svaret
-    // kan använda threads och sortera på tid och sen ta första?
 
 }

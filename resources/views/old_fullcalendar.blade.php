@@ -44,10 +44,9 @@
     </div>
   </div>
 </div>
-
 </tbody>
+
 <script>
-    alert( "{{ $role }}");
     jQuery(document).ready(function () {
         var SITEURL = "{{url('/')}}";
         $.ajaxSetup({
@@ -84,7 +83,7 @@
             select: function (start, end, allDay) {
                 <!-- Om inloggad och Admin -->
 
-                if("{{ $role }}" == "admin" ){
+                if(true){
                     var startDate = $.fullCalendar.formatDate(start, "Y-MM-DD");
                     var endDate = $.fullCalendar.formatDate(end, "Y-MM-DD");
                     var modal = displayModal();
@@ -150,7 +149,7 @@
 
             eventDrop: function (event, delta) {
                 <!-- Om inloggad och Admin -->
-                if("{{ $role }}" == "admin" ){
+                if(Auth::check() && Auth::user()->role == 1){
                     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
                     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
                     $.ajax({
@@ -180,7 +179,7 @@
                                         " <a href=\"" + event.url + "\">Länk till event</a>");
                 
                 <!-- Om inloggad och Admin -->
-                if("{{ $role }}" == "admin" ){
+                if(true){
 
                     $('#modal-admin-buttons').html("<button type=\"button\" id=\"edit\">Edit</button>" + "\t" + 
                                                     "<button type=\"button\" id=\"delete\">Delete</button>")
@@ -223,6 +222,9 @@
                             
                             var start = startDate + " " + startTime + ":00";
                             var end = endDate + " " + endTime + ":00";
+
+                            // var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD hh:mm:ss");
+                            // var end = $.fullCalendar.formatDate(event.start, "Y-MM-DD hh:mm:ss");
 
                             $.ajax({
                                 url: "{{URL::to('/fullcalendar/update')}}",

@@ -9,20 +9,8 @@ use App\User;
 
 class Reply extends Model
 {
-    // use HasFactory;
 
-    protected $fillable = ['body', 'thread_id', 'user_id'];
-
-    // Borde vara hasOne - om man vill kunna gå från Reply till Thread
-    // Måste lägga till forein key i thread isåfall    
-    // public function getThread(){
-    // 	return $this->belongsTo(Thread::class);
-    // }
-
-    // Borde vara hasOne - om man vill kunna gå från Reply till User
-    // Måste lägga till forein key i user isåfall
-    // public function getUser(){
-    // 	return $this->belongsTo(User::class);
-    // }
+    protected $fillable = ['body'];
+    // protected $fillable = ['body', 'thread_id', 'user_id'];
 
 }
