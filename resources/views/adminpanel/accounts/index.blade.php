@@ -155,9 +155,57 @@
                             </div>
                         </div>
                     </li>
+                    <li class="list-group-item">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading-">
+                                    <h4>
+                                        <a data-toggle="collapse" href="#collapse4" class="btn">Banned accounts</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse4" class="panel-collapse collapse">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>
+                                                    <th>Created at</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($users as $user)
+                                                    @if(0)
+                                                        <tr>
+                                                            <td>{{$user->name}}</td>
+                                                            <td>{{$user->email}}</td>
+                                                            <td>{{$user->role}}</td>
+                                                            <td>{{$user->created_at}}</td>
+                                                            @if(Auth::user()->role == 'admin')
+                                                                <td>
+                                                                    <a href="/adminpanel/accounts/{{$user->id}}/edit" class="btn btn-link">Edit</a>
+                                                                </td>
+                                                                <td>
+                                                                    {!! Form::open(['action' => ['AccountsController@destroy', $user->id], 'method' => 'POST']) !!}
+                                                                        {{Form::hidden('_method', 'DELETE')}}
+                                                                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                                                                    {!! Form::close() !!}
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
-                    <br>
-                    <a href="/adminpanel/accounts/create" class="btn btn-primary">Create user</a>
             </div>
         </div>
     </div>

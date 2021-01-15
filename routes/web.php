@@ -21,6 +21,7 @@ Route::get('/services', 'PagesController@services');
 Route::get('/home', 'PagesController@index')->name('home');
 Route::get('/adminpanel', 'AdminPanelController@index');
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/adminpanel/accounts/invite', 'AccountsController@invite');
 
 Route::resource('posts', 'PostsController');
 Route::resource('/adminpanel/accounts', 'AccountsController');

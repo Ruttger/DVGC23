@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Invitation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class AccountsController extends Controller
 {
@@ -35,7 +37,6 @@ class AccountsController extends Controller
      */
     public function create()
     {
-        return redirect('/home')->with('error', 'Unauthorized Page');
     }
 
     /**
@@ -122,5 +123,13 @@ class AccountsController extends Controller
             $user->delete();
             return redirect('/adminpanel/accounts')->with('success', 'User deleted');
         }
+    }
+    public function invite()
+    {
+        $invitation = new Invitation();
+        $invitation->inviter_id = auth()->user()->id;
+        $invitation->uuid = Str::uuid();
+        $invitation->save();
+        return $invitation->uuid;
     }
 }
